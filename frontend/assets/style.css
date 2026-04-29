@@ -528,6 +528,9 @@ main {
 .challenge-card.hidden {
   display: none;
 }
+a {
+  text-decoration: none;
+}
 
 .card-badge {
   font-size: 10px;

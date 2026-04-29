@@ -114,11 +114,9 @@
         <button class="filter-btn active" data-filter="all">all</button>
         <button class="filter-btn" data-filter="web">web</button>
         <button class="filter-btn" data-filter="crypto">crypto</button>
-        <button class="filter-btn" data-filter="forensics">forensics</button>
       </div>
 
       <div class="challenges-grid" id="challenges-grid">
-
         <div class="challenge-card" data-category="web">
           <div class="card-badge">WEB</div>
           <h3 class="card-title">SQL Injection 101</h3>
@@ -140,28 +138,20 @@
             <span class="solves">🔓 195 solves</span>
           </div>
         </div>
-
-        <div class="challenge-card" data-category="forensics">
-          <div class="card-badge">FORENSICS</div>
-          <h3 class="card-title">Steganography Zero</h3>
-          <p class="card-desc">Something is hidden inside this innocuous image. Can you extract it without corrupting the file?</p>
-          <div class="card-footer">
-            <span class="difficulty difficulty--medium">medium</span>
-            <span class="points">150 pts</span>
-            <span class="solves">🔓 87 solves</span>
+      
+        <a href="challenges/file_upload.html">
+          <div class="challenge-card" data-category="web">
+            <div class="card-badge">WEB</div>
+            <h3 class="card-title">File Upload (ZIP)</h3>
+            <p class="card-desc">Inject a payload that bypasses the sanitisation layer and exfiltrates the admin cookie.</p>
+            <div class="card-footer">
+              <span class="difficulty difficulty--easy">easy</span>
+              <span class="points">50 pts</span>
+              <span class="solves">🔓 61 solves</span>
+            </div>
           </div>
-        </div>
+        </a>
 
-        <div class="challenge-card" data-category="web">
-          <div class="card-badge">WEB</div>
-          <h3 class="card-title">File Upload (ZIP)</h3>
-          <p class="card-desc">Inject a payload that bypasses the sanitisation layer and exfiltrates the admin cookie.</p>
-          <div class="card-footer">
-            <span class="difficulty difficulty--easy">easy</span>
-            <span class="points">50 pts</span>
-            <span class="solves">🔓 61 solves</span>
-          </div>
-        </div>
       </div>
 
       <div class="challenges-cta">
