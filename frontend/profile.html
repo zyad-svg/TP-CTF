@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HACKNET CTF — Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=VT323&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/global.css" />
+  <link rel="stylesheet" href="assets/css/profile.css" />
+</head>
+<body>
+  <div class="scanlines"></div>
+  <div class="noise"></div>
+
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span class="nav-prompt">&gt;</span> HACKNET
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="nav-link">-/home</a></li>
+      <li><a href="profile.html" class="nav-link active">-/profile</a></li>
+    </ul>
+    <button class="nav-burger" id="navBurger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <main class="profile-layout">
+
+    <aside class="profile-sidebar">
+      <div class="avatar-zone">
+        <div class="avatar-frame" id="avatarFrame">
+          <img src="" alt="Avatar" id="avatarImg" class="avatar-img hidden" />
+          <div class="avatar-placeholder" id="avatarPlaceholder">
+            <span class="avatar-icon">?</span>
+          </div>
+          <label class="avatar-upload-btn" for="avatarInput" title="Upload avatar">
+            <span>+</span>
+          </label>
+          <input type="file" id="avatarInput" name="avatar" accept=".xml,image/*" class="hidden" />
+        </div>
+        <div class="avatar-info">
+          <p class="avatar-hint">Upload avatar or XML config</p>
+          <p class="avatar-formats">.xml / .jpg / .png</p>
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <div class="profile-card-row">
+          <span class="card-key">USERNAME</span>
+          <span class="card-val" id="sideUsername">h4ck3r_01</span>
+        </div>
+        <div class="profile-card-row">
+          <span class="card-key">RANK</span>
+          <span class="card-val rank-badge">SCHOLAR</span>
+        </div>
+        <div class="profile-card-row">
+          <span class="card-key">SCORE</span>
+          <span class="card-val score-val">1,337</span>
+        </div>
+        <div class="profile-card-row">
+          <span class="card-key">JOINED</span>
+          <span class="card-val">04-Sep-2024</span>
+        </div>
+      </div>
+
+      <a href="../index.html" class="btn-secondary sidebar-logout">./logout.sh</a>
+    </aside>
+
+    <section class="profile-main">
+
+      <div class="section-header">
+        <span class="section-prompt">&gt;</span>
+        <h2 class="section-title">cat profile.json</h2>
+      </div>
+
+      <div class="profile-form-panel">
+        <form class="profile-form" id="profileForm" action="#" method="POST">
+          <div class="form-grid">
+            <div class="field-group">
+              <label class="field-label" for="displayName">DISPLAY NAME</label>
+              <div class="field-wrap">
+                <span class="field-prompt">&gt;_</span>
+                <input class="field-input" type="text" id="displayName" name="displayName" value="h4ck3r_01" />
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="email">EMAIL</label>
+              <div class="field-wrap">
+                <span class="field-prompt">&gt;_</span>
+                <input class="field-input" type="email" id="email" name="email" value="user@hacknet.ctf" />
+              </div>
+            </div>
+            <div class="field-group full-width">
+              <label class="field-label" for="bio">BIO</label>
+              <div class="field-wrap textarea-wrap">
+                <span class="field-prompt textarea-prompt">&gt;_</span>
+                <textarea class="field-input field-textarea" id="bio" name="bio" rows="3" placeholder="Describe yourself..."></textarea>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="country">COUNTRY</label>
+              <div class="field-wrap">
+                <span class="field-prompt">&gt;_</span>
+                <input class="field-input" type="text" id="country" name="country" placeholder="e.g. France" />
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="team">TEAM</label>
+              <div class="field-wrap">
+                <span class="field-prompt">&gt;_</span>
+                <input class="field-input" type="text" id="team" name="team" placeholder="Team name" />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn-primary" type="submit">./save_changes.sh</button>
+            <button class="btn-secondary" type="button" id="resetBtn">./reset.sh</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="section-header mt-lg">
+        <span class="section-prompt">&gt;</span>
+        <h2 class="section-title">ls ./solved_challenges</h2>
+      </div>
+
+      <div class="challenges-table-wrap">
+        <table class="challenges-table">
+          <thead>
+            <tr>
+              <th>CHALLENGE</th>
+              <th>CATEGORY</th>
+              <th>POINTS</th>
+              <th>SOLVED AT</th>
+              <th>STATUS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SQL Basics</td>
+              <td>WEB</td>
+              <td class="pts">100</td>
+              <td>04-Sep-2024</td>
+              <td><span class="badge badge-solved">SOLVED</span></td>
+            </tr>
+            <tr>
+              <td>Path Traversal</td>
+              <td>WEB</td>
+              <td class="pts">250</td>
+              <td>05-Sep-2024</td>
+              <td><span class="badge badge-solved">SOLVED</span></td>
+            </tr>
+            <tr>
+              <td>Caesar's Secret</td>
+              <td>CRYPTO</td>
+              <td class="pts">150</td>
+              <td>06-Sep-2024</td>
+              <td><span class="badge badge-solved">SOLVED</span></td>
+            </tr>
+            <tr>
+              <td>XXE Injection</td>
+              <td>WEB</td>
+              <td class="pts">400</td>
+              <td>—</td>
+              <td><span class="badge badge-pending">PENDING</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+  </main>
+
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/profile.js"></script>
+</body>
+</html>
