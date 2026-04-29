@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Portail Admin — MegaCorp</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { background:#0d1117; color:#e0e0e0; font-family:'Courier New',monospace; display:flex; justify-content:center; align-items:center; min-height:100vh; }
+        .box { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:40px; width:100%; max-width:420px; text-align:center; }
+        .badge { background:#cc0000; color:white; font-size:0.7rem; padding:3px 10px; border-radius:20px; letter-spacing:2px; margin-bottom:20px; display:inline-block; }
+        h1 { color:#fff; letter-spacing:3px; font-size:1.4rem; margin-bottom:6px; }
+        .sub { color:#555; font-size:0.75rem; letter-spacing:2px; margin-bottom:10px; }
+        .desc { color:#888; font-size:0.82rem; margin-bottom:28px; line-height:1.6; }
+        label { display:block; text-align:left; font-size:0.72rem; color:#555; margin-bottom:5px; letter-spacing:1px; text-transform:uppercase; }
+        input { width:100%; background:#0d1117; border:1px solid #30363d; border-radius:4px; padding:11px; color:#e0e0e0; font-family:'Courier New',monospace; margin-bottom:16px; }
+        input:focus { outline:none; border-color:#cc0000; }
+        button { width:100%; background:#cc0000; color:#fff; border:none; border-radius:4px; padding:12px; font-family:'Courier New',monospace; letter-spacing:2px; cursor:pointer; text-transform:uppercase; }
+        button:hover { background:#aa0000; }
+        #msg { margin-top:20px; padding:14px; border-radius:4px; font-size:0.85rem; display:none; text-align:left; line-height:1.6; }
+        .success { background:#0a1f0a; border:1px solid #1a4d1a; color:#4caf50; }
+        .error   { background:#1f0a0a; border:1px solid #4d1a1a; color:#f44336; }
+        .flag    { margin-top:10px; padding:10px; background:#0d1117; border:1px solid #1a4d1a; color:#69f0ae; font-weight:bold; }
+        .back    { display:block; margin-top:20px; color:#555; font-size:0.75rem; text-decoration:none; }
+        .back:hover { color:#cc0000; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <span class="badge">SQL INJECTION</span>
+        <h1>MEGACORP ADMIN</h1>
+        <p class="sub">Portail d'administration</p>
+        <p class="desc">Le portail admin de MegaCorp est protégé. Saurez-vous contourner l'authentification ?</p>
+
+        <label>Nom d'utilisateur</label>
+        <input type="text" id="user" placeholder="admin" autocomplete="off"/>
+
+        <label>Mot de passe</label>
+        <input type="password" id="pass" placeholder="••••••••"/>
+
+        <button onclick="login()">./connect.sh</button>
+        <div id="msg"></div>
+        <a class="back" href="/">← Retour</a>
+    </div>
+
+    <script>
+        async function login() {
+            const username = document.getElementById('user').value;
+            const password = document.getElementById('pass').value;
+            const msg = document.getElementById('msg');
+
+            try {
+                const res = await fetch('/api/login-admin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await res.json();
+                msg.style.display = 'block';
+                if (data.success) {
+                    msg.className = 'success';
+                    msg.innerHTML = '✅ Accès autorisé !<div class="flag">🚩 ' + data.flag + '</div>';
+                } else {
+                    msg.className = 'error';
+                    msg.innerHTML = '❌ ' + data.message;
+                }
+            } catch(e) {
+                msg.style.display = 'block';
+                msg.className = 'error';
+                msg.innerHTML = '❌ Impossible de contacter le serveur.';
+            }
+        }
+    </script>
+</body>
+</html>

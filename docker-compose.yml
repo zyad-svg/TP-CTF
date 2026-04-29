@@ -10,6 +10,7 @@ services:
       - ./frontend:/usr/share/nginx/html
     depends_on:
       - backend
+    restart: unless-stopped
 
   backend:
     image: node:18-alpine
@@ -17,9 +18,21 @@ services:
     volumes:
       - ./backend:/app
     command: sh -c "if [ -f package.json ]; then npm install && npm start; else sleep infinity; fi"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
 
   db:
     image: mariadb:10.5
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: ctf_db
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-prootpassword"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
