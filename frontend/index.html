@@ -1,75 +1,202 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HACKNET — Login</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=VT323&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/global.css" />
-  <link rel="stylesheet" href="assets/css/login.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MegaCorp — Internal Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/global.css">
 </head>
 <body>
-  <div class="scanlines"></div>
-  <div class="noise"></div>
 
+  <!-- NAVBAR -->
   <nav class="navbar">
-    <div class="nav-brand">
-      <span class="nav-prompt">&gt;</span> HACKNET
+    <div class="nav-logo">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <polygon points="14,2 26,8 26,20 14,26 2,20 2,8" stroke="#cc0000" stroke-width="1.5" fill="none"/>
+        <polygon points="14,7 21,11 21,17 14,21 7,17 7,11" fill="#cc0000" opacity="0.15"/>
+        <text x="14" y="17" text-anchor="middle" fill="#cc0000" font-size="8" font-family="monospace" font-weight="bold">MC</text>
+      </svg>
+      <span>MEGACORP</span>
     </div>
-    <ul class="nav-links">
-      <li><a href="index.html" class="nav-link active">-/home</a></li>
-    </ul>
-    <button class="nav-burger" id="navBurger" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="nav-status">
+      <span class="dot"></span> SYSTEM ONLINE
+    </div>
   </nav>
 
-  <main class="main-content">
-    <div class="terminal-panel">
-      <div class="terminal-titlebar">
-        <span class="dot dot-red"></span>
-        <span class="dot dot-yellow"></span>
-        <span class="dot dot-green"></span>
-        <span class="terminal-title">root@hacknet ~ /login</span>
+  <!-- PROGRESS BAR -->
+  <div class="progress-bar" id="progress-bar">
+    <div class="progress-step active" id="prog-1">
+      <span class="prog-num">01</span>
+      <span class="prog-label">AUTH BYPASS</span>
+    </div>
+    <div class="prog-line"></div>
+    <div class="progress-step" id="prog-2">
+      <span class="prog-num">02</span>
+      <span class="prog-label">FILE UPLOAD</span>
+    </div>
+    <div class="prog-line"></div>
+    <div class="progress-step" id="prog-3">
+      <span class="prog-num">03</span>
+      <span class="prog-label">RCE</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       PAGE 1 — SQL INJECTION
+  ══════════════════════════════════ -->
+  <div id="page-login" class="page active">
+    <div class="scene-bg">
+      <div class="grid-overlay"></div>
+    </div>
+    <div class="container">
+      <div class="terminal-window">
+        <div class="terminal-bar">
+          <span class="t-dot red"></span>
+          <span class="t-dot yellow"></span>
+          <span class="t-dot green"></span>
+          <span class="t-title">megacorp-auth.exe</span>
+        </div>
+        <div class="terminal-body">
+          <div class="t-line"><span class="t-prompt">$</span> ./init_auth.sh</div>
+          <div class="t-line success">Loading authentication module... <span class="ok">[OK]</span></div>
+          <div class="t-line success">Connecting to employee database... <span class="ok">[OK]</span></div>
+          <div class="t-line warn">WARNING: Legacy SQL driver detected.</div>
+          <div class="t-line"><span class="t-cursor">_</span></div>
+        </div>
       </div>
-      <div class="terminal-body">
-        <p class="term-line"><span class="prompt">&gt;</span> ./authenticate.sh</p>
-        <p class="term-output">Initialising secure session... <span class="ok">[OK]</span></p>
-        <p class="term-output">Loading credentials module... <span class="ok">[OK]</span></p>
-        <p class="term-output">Awaiting input...</p>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="vuln-tag">SQL INJECTION</div>
+          <h1>Employee Portal</h1>
+          <p class="subtitle">Restricted access — MegaCorp Internal Network</p>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label>USERNAME</label>
+            <div class="input-wrap">
+              <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <input type="text" id="login-user" placeholder="Enter username" autocomplete="off"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>PASSWORD</label>
+            <div class="input-wrap">
+              <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="login-pass" placeholder="Enter password"/>
+            </div>
+          </div>
+          <button class="btn-primary" onclick="doLogin()">
+            <span>AUTHENTICATE</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+          <div id="login-error" class="alert alert-error hidden"></div>
+          <div id="login-success" class="alert alert-success hidden"></div>
+        </div>
+        <div class="card-hint">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Hint: The authentication query may be vulnerable to input manipulation.
+        </div>
       </div>
     </div>
+  </div>
 
-    <div class="login-panel">
-      <div class="login-header">
-        <h1 class="login-title">HACKNET<span class="title-accent">.COM</span></h1>
-        <p class="login-sub">CAPTURE. EXPLOIT. DOMINATE.</p>
+  <!-- ══════════════════════════════════
+       PAGE 2 — FILE UPLOAD
+  ══════════════════════════════════ -->
+  <div id="page-dashboard" class="page hidden">
+    <div class="scene-bg"><div class="grid-overlay"></div></div>
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          <div class="vuln-tag success">✓ AUTH BYPASSED</div>
+          <h1>Welcome, <span id="logged-user" class="accent"></span></h1>
+          <div class="flag-captured" id="flag1"></div>
+        </div>
+        <div class="card-body">
+          <div class="separator">
+            <div class="vuln-tag">FILE UPLOAD</div>
+          </div>
+          <p class="desc">Update your employee profile picture. <span style="color:#e05c5c">⚠ Images only (.jpg, .png, .gif)</span></p>
+
+          <div class="upload-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#484f58" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <p class="upload-text">Upload your profile picture</p>
+            <p class="upload-sub">Images uniquement — .jpg .png .gif</p>
+            <input type="file" id="file-input" accept=".jpg,.png,.gif" style="display:none" onchange="doUpload()"/>
+          </div>
+          <div id="upload-error" class="alert alert-error hidden"></div>
+          <div id="upload-success" class="alert alert-success hidden"></div>
+        </div>
+        <div class="card-hint">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Hint: The client-side filter may not be the only line of defense...
+        </div>
       </div>
-
-      <form class="login-form" id="loginForm" action="#" method="POST">
-        <div class="field-group">
-          <label class="field-label" for="username">IDENTIFIER</label>
-          <div class="field-wrap">
-            <span class="field-prompt">&gt;_</span>
-            <input class="field-input" type="text" id="username" name="username" autocomplete="off" placeholder="enter username" />
-          </div>
-        </div>
-        <div class="field-group">
-          <label class="field-label" for="password">PASSPHRASE</label>
-          <div class="field-wrap">
-            <span class="field-prompt">&gt;_</span>
-            <input class="field-input" type="password" id="password" name="password" autocomplete="off" placeholder="••••••••" />
-          </div>
-        </div>
-        <div class="form-error hidden" id="formError">
-          <span class="err-icon">[!]</span> <span id="errorMsg">Authentication failed.</span>
-        </div>
-        <button class="btn-primary" type="submit">Connect</button>
-      </form>
     </div>
-  </main>
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/login.js"></script>
+  </div>
+
+  <!-- ══════════════════════════════════
+       PAGE 3 — RCE
+  ══════════════════════════════════ -->
+  <div id="page-rce" class="page hidden">
+    <div class="scene-bg"><div class="grid-overlay"></div></div>
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          <div class="vuln-tag success">✓ FILE UPLOADED</div>
+          <h1>File Manager</h1>
+          <div class="flag-captured" id="flag2"></div>
+        </div>
+        <div class="card-body">
+          <div class="separator">
+            <div class="vuln-tag">REMOTE CODE EXECUTION</div>
+          </div>
+          <p class="desc">The debug utility allows executing uploaded scripts for testing purposes.</p>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span>debug_exec.js</span>
+              <span class="code-tag">VULNERABLE</span>
+            </div>
+            <code>GET /api/exec?file=<span class="accent">[filename]</span></code>
+          </div>
+
+          <div class="form-group" style="margin-top:20px">
+            <label>UPLOAD A SCRIPT TO EXECUTE</label>
+            <div class="upload-zone" id="rce-upload-zone">
+              <input type="file" id="rce-file-input" style="display:none" onchange="handleRCEFile(this)"/>
+              <div onclick="document.getElementById('rce-file-input').click()" style="cursor:pointer">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <p id="rce-file-label">Drop your .js file here or click to browse</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top:16px">
+            <label>FILE TO EXECUTE</label>
+            <div class="input-wrap">
+              <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              <input type="text" id="rce-file" placeholder="shell.js"/>
+            </div>
+          </div>
+
+          <button class="btn-primary btn-danger" onclick="doRCE()">
+            <span>EXECUTE FILE</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </button>
+          <div id="rce-upload-error" class="alert alert-error hidden"></div>
+          <div id="rce-upload-success" class="alert alert-success hidden"></div>
+          <div id="rce-error" class="alert alert-error hidden"></div>
+          <div id="rce-output" class="rce-output hidden"></div>
+          <div id="flag3" class="flag-final hidden"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./assets/js/main.js"></script>
 </body>
 </html>
